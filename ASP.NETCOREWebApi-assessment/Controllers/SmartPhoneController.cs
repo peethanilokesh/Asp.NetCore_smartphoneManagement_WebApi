@@ -58,6 +58,7 @@ namespace ASP.NETCOREWebAPI_assessment.Controllers
             phone.Model = editViewModel.Model;
             phone.Feature = editViewModel.Feature;
             phone.Price = editViewModel.Price;
+            
             _smartPhoneRepository.UpdatePhone(phone);
             return Ok(phone);
         }
@@ -73,6 +74,18 @@ namespace ASP.NETCOREWebAPI_assessment.Controllers
             _smartPhoneRepository.DeletePhone(id);
             return Ok();
         }
-
+        [HttpGet]
+        [Route ("/api/smartphoneMinAvg")]
+        public IActionResult MinAvgOfPhonesByprice()
+        {
+            List<double> phones = _smartPhoneRepository.MinAndAveragePrice();
+            return Ok(new { Minimum_Phone_price= phones[0],Average_Phone_Price=phones[1]});
+        }
+        [HttpPost]
+        [Route("/api/phoneBymodel,price")]
+        public IActionResult GetPhonesByModelAndPrice([FromBody] ModelAndPriceViewModel ViewModel)
+        {
+            return Ok(_smartPhoneRepository.GetPhonesByModelAndPrice(ViewModel));
+        }
     }
 }

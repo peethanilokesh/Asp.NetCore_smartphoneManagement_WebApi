@@ -1,4 +1,5 @@
 ﻿using ASP.NETCOREWebAPI_assessment.Model;
+using ASP.NETCOREWebAPI_assessment.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace ASP.NETCOREWebAPI_assessment.Repository
         void AddPhone(SmartPhone smartPhone);
         void UpdatePhone(SmartPhone smartPhone);
         void DeletePhone(int id);
+        List<double> MinAndAveragePrice();
+        List<SmartPhone> GetPhonesByModelAndPrice(ModelAndPriceViewModel viewModel );
     }
 }

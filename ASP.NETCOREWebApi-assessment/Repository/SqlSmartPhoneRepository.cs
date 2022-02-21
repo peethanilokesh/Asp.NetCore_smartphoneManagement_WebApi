@@ -1,5 +1,6 @@
 ﻿using ASP.NETCOREWebAPI_assessment.DBcontext;
 using ASP.NETCOREWebAPI_assessment.Model;
+using ASP.NETCOREWebAPI_assessment.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,22 @@ namespace ASP.NETCOREWebAPI_assessment.Repository
             SmartPhone smartPhone = GetPhoneById(id);
             _SmartPhoneDbcontext.smartPhones.Remove(smartPhone);
             _SmartPhoneDbcontext.SaveChanges();
+        }
+
+        public List<double> MinAndAveragePrice()
+        {
+            List<double> MinAvg = new List<double>();
+            List<SmartPhone> smartPhones = _SmartPhoneDbcontext.smartPhones.ToList();
+            MinAvg.Add(smartPhones.Min(s => Double.Parse(s.Price)));
+            MinAvg.Add(smartPhones.Average(s => Double.Parse(s.Price)));
+            return MinAvg;
+        }
+
+        public List<SmartPhone> GetPhonesByModelAndPrice(ModelAndPriceViewModel viewModel)
+        {
+            List<SmartPhone> smartPhones = new List<SmartPhone>();
+            smartPhones = _SmartPhoneDbcontext.smartPhones.ToList();
+            return smartPhones.FindAll(s => s.Model == viewModel.Model && Double.Parse(s.Price)<=Double.Parse(viewModel.Price));
         }
     }
 }
