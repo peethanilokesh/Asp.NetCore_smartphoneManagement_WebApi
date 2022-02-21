@@ -1,6 +1,7 @@
 ﻿using ASP.NETCOREWebAPI_assessment.Model;
 using ASP.NETCOREWebAPI_assessment.Repository;
 using ASP.NETCOREWebAPI_assessment.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -33,11 +34,12 @@ namespace ASP.NETCOREWebAPI_assessment.Controllers
             var entityById = _smartPhoneRepository.GetPhoneById(id);
             if ( entityById== null)
             {
-                return NotFound($"with Id = {id} is not found");
+                return NotFound($"phone with Id = {id} is not found");
             }
             return Ok(entityById);
         }
         [HttpPost]
+        [Authorize]
         [Route("/api/smartphone")]
         public IActionResult AddPhone([FromBody] AddViewModel addViewModel)
         {
@@ -46,6 +48,7 @@ namespace ASP.NETCOREWebAPI_assessment.Controllers
             return Ok(phone);
         }
         [HttpPut]
+        [Authorize]
         [Route("/api/smartphone/{id}")]
         public IActionResult EditEmployee(int id, [FromBody] EditViewModel editViewModel)
         {
@@ -63,6 +66,7 @@ namespace ASP.NETCOREWebAPI_assessment.Controllers
             return Ok(phone);
         }
         [HttpDelete]
+        [Authorize]
         [Route("/api/smartphone/{id}")]
         public IActionResult DeletePhone(int id)
         {
